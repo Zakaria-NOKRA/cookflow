@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "526361535582",
+    "project_id": "cookflow-d5d3d",
+    "storage_bucket": "cookflow-d5d3d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526361535582:android:d3dcb199e9e9118b2300cf",
+        "android_client_info": {
+          "package_name": "com.example.cookflow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6Q6ghD_YcwEzQxhD_uX4-XXZ3Kc3HGJw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
