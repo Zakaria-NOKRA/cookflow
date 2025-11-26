@@ -108,3 +108,8 @@ flutterfire configure
 ```
 flutter run
 ```
+## Project Structure
+
+### Database schema
+
+<img width="744" height="663" alt="cookflow_schema" src="https://github.com/user-attachments/assets/db10bd70-9e9a-46a3-a034-5b8e092014c1" />
