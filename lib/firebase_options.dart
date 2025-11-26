@@ -42,7 +42,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDPiLRnkSu5iskyYEpPEIL6AwWbqGl7fjQ',
-    appId: '1:526361535582:web:008007231e1771862300cf',
+    appId: '1:526361535582:web:a7c583ecca0b5e652300cf',
     messagingSenderId: '526361535582',
     projectId: 'cookflow-d5d3d',
     authDomain: 'cookflow-d5d3d.firebaseapp.com',
@@ -77,10 +77,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyDPiLRnkSu5iskyYEpPEIL6AwWbqGl7fjQ',
-    appId: '1:526361535582:web:c47c1b0a25af2bef2300cf',
+    appId: '1:526361535582:web:e9aebfa533e25ceb2300cf',
     messagingSenderId: '526361535582',
     projectId: 'cookflow-d5d3d',
     authDomain: 'cookflow-d5d3d.firebaseapp.com',
     storageBucket: 'cookflow-d5d3d.firebasestorage.app',
   );
+
 }

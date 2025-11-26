@@ -53,7 +53,7 @@ flutter doctor --android-licenses
 ### 🗂 4. Clone the Repository
 
 ```
-git clone https://github.com/YOUR_USERNAME/cookflow.git
+git clone https://github.com/Zakaria-NOKRA/cookflow.git
 cd cookflow
 ```
 
