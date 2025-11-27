@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../services/auth_service.dart';
 import '../../navigation/app_router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -137,7 +139,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (error == null) {
       // SUCCESS → go to home
-      Navigator.pushReplacementNamed(context, AppRouter.home);
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+
+      // Fetch user doc from Firestore
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .get();
+
+      final role = doc.data()?['role'] ?? 'user';
+
+      if (role == 'admin') {
+        Navigator.pushReplacementNamed(context, AppRouter.adminHome);
+      } else {
+        Navigator.pushReplacementNamed(context, AppRouter.home);
+      }
     } else {
       // ERROR → show message
       ScaffoldMessenger.of(
