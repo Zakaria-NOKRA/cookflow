@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../auth/choose_auth_screen.dart';
 import '../../navigation/app_router.dart';
 
 class WelcomeScreen extends StatelessWidget {
