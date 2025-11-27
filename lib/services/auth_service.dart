@@ -1,78 +1,69 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../models/user.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  /// Stream to listen to login/logout status
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
-
-  /// Register a new user with email + password
-  Future<AppUser?> register(String name, String email, String password) async {
+  /// REGISTER USER
+  Future<String?> register({
+    required String fullName,
+    required String email,
+    required String password,
+  }) async {
     try {
-      // Create user in Firebase Auth
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      // 1️⃣ Create user in Firebase Auth
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
 
-      User user = result.user!;
+      String uid = userCredential.user!.uid;
 
-      // Create user document in Firestore
-      AppUser newUser = AppUser(
-        id: user.uid,
-        name: name,
-        email: email,
-        preferences: {}, // empty until onboarding
-        savedCount: 0,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      );
+      // 2️⃣ Save user data in Firestore
+      await _db.collection("users").doc(uid).set({
+        "uid": uid,
+        "fullName": fullName,
+        "email": email,
+        "role": "user", // 👈 default role
+        "createdAt": FieldValue.serverTimestamp(),
+      });
 
-      await _db.collection('users').doc(user.uid).set(newUser.toMap());
-
-      return newUser;
+      return null; // success → no error message
+    } on FirebaseAuthException catch (e) {
+      return e.message;
     } catch (e) {
-      print("Registration error: $e");
-      return null;
+      return "Unexpected error: $e";
     }
   }
 
-  /// Login with email + password
-  Future<AppUser?> login(String email, String password) async {
+  /// LOGIN USER
+  Future<String?> login({
+    required String email,
+    required String password,
+  }) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      User user = result.user!;
-      return await getUserProfile(user.uid);
-    } catch (e) {
-      print("Login error: $e");
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
       return null;
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    } catch (e) {
+      return "Unexpected error: $e";
     }
   }
 
-  /// Logout user
+  /// LOGOUT USER
   Future<void> logout() async {
     await _auth.signOut();
   }
 
-  /// Fetch user profile from Firestore
-  Future<AppUser?> getUserProfile(String userId) async {
-    try {
-      DocumentSnapshot doc = await _db.collection('users').doc(userId).get();
+  /// GET CURRENT USER UID
+  String? get uid => _auth.currentUser?.uid;
 
-      if (doc.exists) {
-        return AppUser.fromMap(doc.data() as Map<String, dynamic>, doc.id);
-      }
-      return null;
-    } catch (e) {
-      print("Profile fetch error: $e");
-      return null;
-    }
+  /// CHECK IF LOGGED IN
+  bool get isLoggedIn => _auth.currentUser != null;
+
+  /// GET USER DATA FROM FIRESTORE
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {
+    final uid = _auth.currentUser!.uid;
+    return await _db.collection("users").doc(uid).get();
   }
 }

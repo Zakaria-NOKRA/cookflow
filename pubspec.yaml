@@ -13,15 +13,17 @@ dependencies:
 
   cupertino_icons: ^1.0.8
 
-  firebase_core: ^3.10.0
-  firebase_auth: ^5.5.0
-  cloud_firestore: ^5.5.0
-  firebase_storage: ^12.3.0
+  # FIREBASE (Correct versions for Flutter 3.38)
+  firebase_core: ^3.10.1
+  firebase_auth: ^5.7.0
+  cloud_firestore: ^5.6.0
+  firebase_storage: ^12.4.0
 
-  # UI / helpers
+  # UTILITIES
   provider: ^6.1.2
   image_picker: ^1.1.0
   video_player: ^2.8.2
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -30,5 +32,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
   assets:
     - assets/images/

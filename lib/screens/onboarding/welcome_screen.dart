@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../home/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../auth/choose_auth_screen.dart';
+import '../../navigation/app_router.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -60,11 +62,14 @@ class WelcomeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => const HomeScreen()),
-                    );
+                  onPressed: () async {
+                    // Save onboarding as done
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    await prefs.setBool('seenOnboarding', true);
+
+                    // Navigate to choose auth screen
+                    Navigator.pushNamed(context, AppRouter.chooseAuth);
                   },
                   child: const Text(
                     "Get Started",

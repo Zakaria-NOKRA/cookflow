@@ -1,35 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'screens/onboarding/welcome_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'navigation/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Init Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(const CookFlowApp());
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
+
+  runApp(CookFlowApp(seenOnboarding: seenOnboarding));
 }
 
 class CookFlowApp extends StatelessWidget {
-  const CookFlowApp({super.key});
+  final bool seenOnboarding;
+  const CookFlowApp({required this.seenOnboarding, super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CookFlow',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Colors.orange,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 0,
-        ),
-      ),
-      home: const WelcomeScreen(),
+      onGenerateRoute: AppRouter.generateRoute,
+      initialRoute: seenOnboarding ? AppRouter.home : AppRouter.welcome,
     );
   }
 }
