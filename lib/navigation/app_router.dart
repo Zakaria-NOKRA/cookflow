@@ -5,8 +5,7 @@ import '../screens/auth/login_screen.dart';
 import '../screens/auth/register_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/admin/admin_home_screen.dart';
-import '../screens/admin/categories/admin_categories_screen.dart';
-import '../screens/admin/categories/add_category_screen.dart';
+import '../screens/admin/recipes/admin_add_recipe_screen.dart';
 
 class AppRouter {
   static const String welcome = '/welcome';
@@ -15,8 +14,7 @@ class AppRouter {
   static const String register = '/register';
   static const String home = '/home';
   static const String adminHome = '/admin-home';
-  static const String adminCategories = '/admin-categories';
-  static const String adminAddCategory = '/add-category';
+  static const String adminAddRecipe = '/admin-add-recipe';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -38,11 +36,8 @@ class AppRouter {
       case adminHome:
         return MaterialPageRoute(builder: (_) => const AdminHomeScreen());
 
-      case adminCategories:
-        return MaterialPageRoute(builder: (_) => const AdminCategoriesScreen());
-
-      case adminAddCategory:
-        return MaterialPageRoute(builder: (_) => const AddCategoryScreen());
+      case adminAddRecipe:
+        return MaterialPageRoute(builder: (_) => const AdminAddRecipeScreen());
 
       default:
         return MaterialPageRoute(

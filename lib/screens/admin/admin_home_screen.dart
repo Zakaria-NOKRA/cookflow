@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'categories/admin_categories_screen.dart'; // <-- add this import
+import '../../navigation/app_router.dart';
 
 class AdminHomeScreen extends StatelessWidget {
   const AdminHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final double cardWidth = (MediaQuery.of(context).size.width - 48) / 2;
-
     return Scaffold(
       backgroundColor: const Color(0xff1e1f23),
 
@@ -63,38 +61,34 @@ class AdminHomeScreen extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            /// RESPONSIVE WRAP GRID
+            /// FLEXIBLE GRID USING WRAP
             Wrap(
               spacing: 16,
               runSpacing: 16,
               children: [
                 _adminCard(
-                  width: cardWidth,
                   title: "Manage Recipes",
                   icon: Icons.restaurant_menu,
                   color: Colors.orange,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRouter.adminAddRecipe);
+                  },
                 ),
                 _adminCard(
-                  width: cardWidth,
                   title: "Manage Categories",
                   icon: Icons.list_alt,
                   color: Colors.blue,
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const AdminCategoriesScreen(),
-                      ),
-                    );
+                    // Future feature
                   },
                 ),
                 _adminCard(
-                  width: cardWidth,
                   title: "Manage Users",
                   icon: Icons.people,
                   color: Colors.green,
-                  onTap: () {},
+                  onTap: () {
+                    // Future feature
+                  },
                 ),
               ],
             ),
@@ -106,9 +100,8 @@ class AdminHomeScreen extends StatelessWidget {
     );
   }
 
-  /// FIXED & RESPONSIVE ADMIN CARD
+  /// ADMIN CARD WIDGET
   Widget _adminCard({
-    required double width,
     required String title,
     required IconData icon,
     required Color color,
@@ -117,7 +110,7 @@ class AdminHomeScreen extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: width,
+        width: 160,
         height: 150,
         decoration: BoxDecoration(
           color: const Color(0xff2d2f33),
